@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f9f9f9;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question h3 {
+            margin: 10px 0;
+        }
+        .answers {
+            margin-left: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Python Quiz</h1>
+    <form method="post">
+        {% csrf_token %}
+        {% for question in questions %}
+            <div class="question">
+                <h3>{{ forloop.counter }}. {{ question.question_text }}</h3>
+                <div class="answers">
+                    {% for answer in question.answer_set.all %}
+                        <label>
+                            <input type="radio" name="{{ question.id }}" value="{{ answer.id }}">
+                            {{ answer.answer_text }}
+                        </label><br>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
